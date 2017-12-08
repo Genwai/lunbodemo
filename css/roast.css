@@ -1,0 +1,66 @@
+ .container {
+     width: 800px;
+     height: 500px;
+     overflow: hidden;
+     border: 1px solid #832283;
+     margin: 0 auto;
+     position: relative;
+ }
+ 
+ .container:hover .btn {
+     display: block;
+ }
+ 
+ .box {
+     width: 5600px;
+     height: 100%;
+     position: absolute;
+ }
+ 
+ .box img {
+     width: 800px;
+     height: 500px;
+     float: left;
+ }
+ 
+ .btn {
+     width: 40px;
+     height: 40px;
+     position: absolute;
+     top: 50%;
+     cursor: pointer;
+     display: none;
+ }
+ 
+ .btn-left {
+     left: 0;
+ }
+ 
+ .btn-right {
+     right: 0;
+ }
+ 
+ .div-round {
+     width: 100px;
+     position: absolute;
+     bottom: 0;
+     left: 50%;
+ }
+ 
+ .div-round .round {
+     width: 10px;
+     height: 10px;
+     background: white;
+     display: inline-block;
+     margin-right: 5px;
+     border-radius: 50%;
+     cursor: pointer;
+ }
+ 
+ .div-round .round:hover {
+     background: salmon;
+ }
+ 
+ .div-round .on {
+     background: salmon;
+ }

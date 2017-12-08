@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>roasting</title>
+    <meta charset="UTF-8">
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/roast.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <!-- <img src="img/5.jpg" alt="照片5" srcset=""> -->
+            <img src="img/1.jpg" alt="照片1" srcset="">
+            <img src="img/2.jpg" alt="照片2" srcset="">
+            <img src="img/3.jpg" alt="照片3" srcset="">
+            <img src="img/4.jpg" alt="照片4" srcset="">
+            <img src="img/5.jpg" alt="照片5" srcset="">
+            <!-- <img src="img/1.jpg" alt="照片1" srcset=""> -->
+
+        </div>
+        <div class="div-round">
+            <span class="round " index="1"></span>
+            <span class="round" index="2"></span>
+            <span class="round" index="3"></span>
+            <span class="round" index="4"></span>
+            <span class="round" index="5"></span>
+        </div>
+
+        <img src="img/left.png" class="btn btn-left" alt="">
+        <img src="img/right.png" class="btn btn-right" alt="">
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var btnleft = $('.btn-left');
+        var btnright = $('.btn-right');
+        var imgs = $('.box img');
+        var spans = $('div-round span');
+        var box = $('.box');
+        var currentIndex = 0; //获取正在展示图片的索引值，
+        var length = imgs.length;
+        var hasStarted = false; //是否已经开始轮播
+        var t = 3000; //轮播时间间隔
+        var timer;
+
+        $('.box img:not(:first)').hide();
+        // $('div-round span:first').addClass('on') 为什么这样写法有错;
+        // 忘记加. 上面的
+        $('span:first').addClass('on') //为什么这样写法有错
+
+        // 下一页
+        function preNext() {
+            var preIndex = currentIndex;
+            currentIndex = ++currentIndex % length;
+            // console.log(preIndex, currentIndex)
+            play(currentIndex, preIndex)
+        }
+        // 上一页
+        function prev(s) {
+            var preIndex = currentIndex;
+            currentIndex = (--currentIndex + length) % length;
+            // console.log(preIndex, currentIndex)
+            play(currentIndex, preIndex)
+        }
+
+        // span小圆点移动
+        function play(currentIndex, preIndex) {
+            imgs.eq(preIndex).fadeOut(500).parent().children().eq(currentIndex).fadeIn(1000);
+            $('span').removeClass('on'); //清楚其他按钮
+            $('span').eq(currentIndex).addClass('on'); //显示本按钮
+        }
+        /* 向前翻 */
+        // btnright.unbind('click')
+        btnright.bind('click', function() {
+            preNext();
+        })
+
+
+        // btnleft.unbind('click');
+        btnleft.bind('click', function() {
+            prev();
+        })
+
+        // 计时器开始
+        function star() {
+            if (!hasStarted) {
+                hasStarted = true;
+                timer = setInterval(function() {
+                    btnleft.click();
+                }, t)
+            }
+        }
+        // 清楚计时器
+        function stop() {
+            clearInterval(timer);
+            hasStarted = false
+        }
+        star();
+
+        // 鼠标移入是图片不进行轮播
+        $('.container').hover(function() {
+                stop();
+            }, function() {
+                star();
+            })
+            // 鼠标移向小圆点时，显示图片
+        $('span').hover(function() {
+            stop();
+            // $(this).siblings().removeClass('on');
+            var preIndex = $('span').filter('.on').index();
+            currentIndex = $(this).index();
+            play(currentIndex, preIndex);
+
+
+        }, function() {
+            star();
+        })
+    })
+</script>
+
+</html>

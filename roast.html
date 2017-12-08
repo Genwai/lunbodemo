@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>roasting</title>
+    <meta charset="UTF-8">
+
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/roast.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box" style="left:-800px">
+            <img src="img/5.jpg" alt="照片5" srcset="">
+            <img src="img/1.jpg" alt="照片1" srcset="">
+            <img src="img/2.jpg" alt="照片2" srcset="">
+            <img src="img/3.jpg" alt="照片3" srcset="">
+            <img src="img/4.jpg" alt="照片4" srcset="">
+            <img src="img/5.jpg" alt="照片5" srcset="">
+            <img src="img/1.jpg" alt="照片1" srcset="">
+
+        </div>
+        <div class="div-round">
+            <span class="round on" index="1"></span>
+            <span class="round" index="2"></span>
+            <span class="round" index="3"></span>
+            <span class="round" index="4"></span>
+            <span class="round" index="5"></span>
+        </div>
+
+        <img src="img/left.png" class="btn btn-left" alt="">
+        <img src="img/right.png" class="btn btn-right" alt="">
+    </div>
+</body>
+<script type="text/javascript">
+    var container = document.querySelector('.container');
+    var box = container.getElementsByClassName('box')[0];
+    var imgs = box.querySelectorAll('.img');
+    var btnLeft = document.querySelector('.btn-left');
+    var btnRight = document.querySelector('.btn-right');
+    var spans = document.querySelectorAll('span');
+    // 计时器
+    var timer;
+
+    function play() {
+        timer = setInterval(function() {
+            btnRight.onclick();
+        }, 1500)
+    }
+    play();
+
+    function stop() {
+        clearInterval(timer);
+    }
+
+
+    var index = 1;
+    btnLeft.onclick = function() {
+
+        if (parseInt(box.style.left) > -800) {
+            box.style.left = -4000 + 'px';
+        }
+        box.style.left = parseInt(box.style.left) + 800 + 'px';
+
+        index -= 1;
+        if (index < 1) {
+            index = 5
+        }
+        for (var i = 0, len = spans.length; i < len; i++) {
+            if (spans[i].className = 'round on') {
+                spans[i].className = 'round';
+            }
+            spans[index - 1].className = 'round on';
+
+        }
+
+
+    }
+    btnRight.onclick = function() {
+        if (parseInt(box.style.left) < -3200) {
+            box.style.left = 0 + 'px';
+        }
+        box.style.left = parseInt(box.style.left) - 800 + 'px';
+
+        index += 1;
+        if (index > 5) {
+            index = 1
+        }
+        for (var i = 0, len = spans.length; i < len; i++) {
+            if (spans[i].className = 'round on') {
+                spans[i].className = 'round';
+            }
+            spans[index - 1].className = 'round on';
+
+        }
+    }
+    container.onmouseover = stop;
+    container.onmouseout = play;
+
+    for (let i = 0, len = spans.length; i < len; i++) {
+        spans[i].onclick = function() {
+            // console.log(i);
+            var clickIndex = parseInt(this.getAttribute('index'));
+            var clickleft = 800 * (index - clickIndex);
+            box.style.left = parseInt(box.style.left) + clickleft + 'px';
+            index = clickIndex;
+            for (var i = 0, len = spans.length; i < len; i++) {
+                if (spans[i].className = 'round on') {
+                    spans[i].className = 'round';
+                }
+                spans[index - 1].className = 'round on';
+
+            }
+        }
+
+    }
+</script>
+
+</html>
